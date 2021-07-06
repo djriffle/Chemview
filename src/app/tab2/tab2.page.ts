@@ -13,11 +13,13 @@ export class Tab2Page {
   ngOnInit(){
     var stage = new NGL.Stage("threed",{ backgroundColor: "white" });
     //stage.loadFile("rcsb://1crn", {defaultRepresentation: true});
-    stage.loadFile( "http://files.rcsb.org/download/1crn.cif" ).then( function( comp ){
-      comp.addRepresentation( "surface", { multipleBond: true } );
+    stage.loadFile( "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/cocaine/sdf",{ ext: "sdf" } ).then( function( comp ){
+      comp.addRepresentation( "ball+stick", { multipleBond: true } );
     } );
     stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
   }
+
+  //SDF
 
 }
 

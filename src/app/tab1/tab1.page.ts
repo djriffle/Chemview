@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { PubchemService } from '../services/pubchem.service';
 const SmilesDrawer = require('smiles-drawer/app.js')
 
 @Component({
@@ -12,31 +13,29 @@ export class Tab1Page {
   deviceWidth: number;
   deviceHeight: number;
 
-  constructor(
-    private platform: Platform,
-  ) {
+  constructor(private platform: Platform,private pubchem: PubchemService) {
     this.deviceHeight = platform.height()
     this.deviceWidth = platform.width()
   }
 
   ngOnInit(){
-
-
-
     let options = {
       width: this.deviceWidth,
       height: this.deviceHeight,
-      compactDrawing: false,
-      terminalCarbons: true,
-      explicitHydrogens: true,
+      // compactDrawing: false,
+      // terminalCarbons: true,
+      // explicitHydrogens: true,
     };
-    let smilesDrawer = new SmilesDrawer.Drawer(options);
-    SmilesDrawer.parse('C=O', function (tree) {
-      smilesDrawer.draw(tree, 'twod', 'light', false);
-      }, function (err) {
-          console.log(err);
-      })
-    }
-  
 
+    this.pubchem.getSmiles('cocaine').then(smiles =>{
+      let smilesDrawer = new SmilesDrawer.Drawer(options);
+      SmilesDrawer.parse(smiles, function (tree) {
+        smilesDrawer.draw(tree, 'twod', 'light', false);
+        }, function (err) {
+            console.log(err);
+        })
+  
+      }
+    )
+  }
 }
