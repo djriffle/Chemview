@@ -21,10 +21,19 @@ export class Tab2Page {
     this.refreshView()
   }
 
+  ionViewWillEnter(){
+    this.refreshView()
+    console.log("test")
+  }
+
   refreshView(){
+    this.stage.removeAllComponents()
+    console.log(this.currentChem.getName( ))
     this.stage.loadFile(this.pubchem.getSDFLink(this.currentChem.getName()),{ ext: "sdf" } ).then( function( comp ){
       comp.addRepresentation( "ball+stick", { multipleBond: true } );
     } );
+    //TODO investigate this as a possible way to save an image to the phone
+    this.stage.makeImage()
   }
 
   search(term){

@@ -13,6 +13,8 @@ export class Tab1Page {
 
   deviceWidth: number;
   deviceHeight: number;
+  popSearch = true
+  searchQuery:string;
 
   options = {
     width: 1000,
@@ -41,9 +43,6 @@ export class Tab1Page {
       
     }
 
-
-
-
   refreshView(){
     let self = this
     this.pubchem.getSmiles(this.currentChem.getName()).then(smiles =>{
@@ -57,8 +56,8 @@ export class Tab1Page {
     )
   }
 
-  search(term){
-    this.currentChem.setName(term)
+  search(event){
+    this.currentChem.setName(this.searchQuery)
     this.refreshView()
   }
 }
