@@ -9,16 +9,27 @@ const NGL = require('ngl/dist/ngl.js')
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  //the div that that ngl projects onto
+  stage
 
   constructor(private pubchem: PubchemService, private currentChem:CurrentChemService) {}
 
   ngOnInit(){
-    var stage = new NGL.Stage("threed",{ backgroundColor: "white" });
-    //stage.loadFile("rcsb://1crn", {defaultRepresentation: true}); 
-    stage.loadFile(this.pubchem.getSDFLink(this.currentChem.getName()),{ ext: "sdf" } ).then( function( comp ){
+    this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
+    this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
+
+    this.refreshView()
+  }
+
+  refreshView(){
+    this.stage.loadFile(this.pubchem.getSDFLink(this.currentChem.getName()),{ ext: "sdf" } ).then( function( comp ){
       comp.addRepresentation( "ball+stick", { multipleBond: true } );
     } );
-    stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
+  }
+
+  search(term){
+    this.currentChem.setName(term)
+    this.refreshView()
   }
 
   //SDF
