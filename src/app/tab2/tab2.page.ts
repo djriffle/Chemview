@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PubchemService } from '../services/pubchem.service';
+import { CurrentChemService } from '../services/current-chem.service';
 const NGL = require('ngl/dist/ngl.js')
 
 @Component({
@@ -8,12 +10,12 @@ const NGL = require('ngl/dist/ngl.js')
 })
 export class Tab2Page {
 
-  constructor() {}
+  constructor(private pubchem: PubchemService, private currentChem:CurrentChemService) {}
 
   ngOnInit(){
     var stage = new NGL.Stage("threed",{ backgroundColor: "white" });
-    //stage.loadFile("rcsb://1crn", {defaultRepresentation: true});
-    stage.loadFile( "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/cocaine/sdf",{ ext: "sdf" } ).then( function( comp ){
+    //stage.loadFile("rcsb://1crn", {defaultRepresentation: true}); 
+    stage.loadFile(this.pubchem.getSDFLink(this.currentChem.getName()),{ ext: "sdf" } ).then( function( comp ){
       comp.addRepresentation( "ball+stick", { multipleBond: true } );
     } );
     stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);

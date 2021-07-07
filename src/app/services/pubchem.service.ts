@@ -24,7 +24,8 @@ export class PubchemService {
     return await smiles
   }
 
-  async getSDF(){
+  getSDFLink(query:string){
+    return "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/"+query+"/sdf"
 
   }
 }
