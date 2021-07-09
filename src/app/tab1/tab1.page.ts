@@ -26,6 +26,8 @@ export class Tab1Page {
   
   //used to draw 2d figure
   smilesDrawer;
+  //is the current chemical a favorite? TODO implement this
+  favorite:boolean = false 
 
   constructor(private platform: Platform,private pubchem: PubchemService, private currentChem:CurrentChemService) {
     

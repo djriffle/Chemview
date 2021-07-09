@@ -1,10 +1,11 @@
 #searchBar{
+}
+#topUI{
     position: absolute;
     top:1vh;
     width: 100vw;
-    // larger z index the more "on top" it is
-    z-index: 4;
-    
+    z-index: 2;
+
 }
 #threed{
     z-index: 1;
