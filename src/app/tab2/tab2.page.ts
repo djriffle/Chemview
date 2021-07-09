@@ -18,7 +18,7 @@ export class Tab2Page {
 
   constructor(private pubchem: PubchemService, private currentChem:CurrentChemService) {}
 
-  ngOnInit(){
+  async ngOnInit(){
     this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
     this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
 
