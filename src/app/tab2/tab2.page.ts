@@ -11,6 +11,10 @@ const NGL = require('ngl/dist/ngl.js')
 export class Tab2Page {
   //the div that that ngl projects onto
   stage
+  //used to fix search bar not non-focussing glitch
+  popSearch:boolean = true
+  //
+  searchQuery: string;
 
   constructor(private pubchem: PubchemService, private currentChem:CurrentChemService) {}
 
@@ -36,8 +40,9 @@ export class Tab2Page {
     this.stage.makeImage()
   }
 
-  search(term){
-    this.currentChem.setName(term)
+  search(event){
+    console.log("term is:"+this.searchQuery)
+    this.currentChem.setName(this.searchQuery)
     this.refreshView()
   }
 

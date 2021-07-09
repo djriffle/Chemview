@@ -1,1 +1,5 @@
-<div id="threed" style="width:100vw; height:100vh;visibility:visible;"></div>  
+<!-- Search Bar -->
+<ion-searchbar *ngIf="popSearch" placeholder="Protein Name or pdb ID" color = "dark" animated [(ngModel)]="searchQuery" 
+(search)="search($event,true)" id="searchBar"></ion-searchbar>
+<!-- NGL Viewer -->
+<div id="threed"></div>  

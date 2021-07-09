@@ -1,5 +1,5 @@
 
-<ion-searchbar *ngIf="popSearch" placeholder="Protein Name or pdb ID" color = "tertiary" animated [(ngModel)]="searchQuery" 
+<ion-searchbar *ngIf="popSearch" placeholder="Protein Name or pdb ID" color = "dark" animated [(ngModel)]="searchQuery" 
 (search)="search($event,true)" id="searchBar"></ion-searchbar>
 <canvas id="twod" style="width:100vw; height:100vh;"></canvas>  
 <!-- This below has pop search to fix the error where the web view doesn't unfocus after a search so the ios keyboard never goes away -->

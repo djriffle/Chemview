@@ -1,0 +1,13 @@
+#searchBar{
+    position: absolute;
+    top:1vh;
+    width: 100vw;
+    // larger z index the more "on top" it is
+    z-index: 4;
+    
+}
+#threed{
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+}
