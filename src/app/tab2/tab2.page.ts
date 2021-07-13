@@ -48,6 +48,7 @@ export class Tab2Page {
     console.log("term is:"+this.searchQuery)
     this.currentChem.setName(this.searchQuery)
     this.refreshView()
+    this.checkIfFavorite()
   }
 
   //SDF
@@ -60,6 +61,9 @@ export class Tab2Page {
     //Checks if current chem is a favorite
     if(this.favoriteService.favoritesContains(this.currentChem.getName())){
       this.favorite = true
+    }
+    else{
+      this.favorite = false
     }
   }
 

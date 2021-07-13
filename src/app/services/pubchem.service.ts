@@ -24,6 +24,13 @@ export class PubchemService {
     return await smiles
   }
 
+  async getMolecularFormula(query:string){
+    let chemJson = await this.http.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+query+'/json').toPromise()
+    let formula = await chemJson["PC_Compounds"][0].props[16].value.sval
+    console.log(formula)
+    return await formula
+  }
+
   getSDFLink(query:string){
     return "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/"+query+"/sdf"
 

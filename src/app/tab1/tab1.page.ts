@@ -17,7 +17,6 @@ export class Tab1Page {
   popSearch = true
   searchQuery:string;
 
-
   options = {
     width: 1000,
     height: 1000,
@@ -70,6 +69,7 @@ export class Tab1Page {
   search(event){
     this.currentChem.setName(this.searchQuery)
     this.refreshView()
+    this.checkIfFavorite()
   }
 
   addFavorite(){
@@ -81,6 +81,9 @@ export class Tab1Page {
     //Checks if current chem is a favorite
     if(this.favoriteService.favoritesContains(this.currentChem.getName())){
       this.favorite = true
+    }
+    else{
+      this.favorite = false
     }
   }
 

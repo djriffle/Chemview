@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
-
+import { PubchemService } from './pubchem.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentChemService {
   
-  name:string = "THC";
+  name:string = "Carbon";
+  formula:string = "C";
 
-  constructor() { }
+  constructor(private pubchem:PubchemService) { }
 
   getName(){
     return this.name
   }
 
-  setName(newName:string){
+  getFormula(){
+    return this.formula
+  }
+
+  async setFormula(){
+    this.formula = await this.pubchem.getMolecularFormula(this.name)
+  }
+
+  async setName(newName:string){
     this.name = newName
+    await this.setFormula()
   }
   
 }
