@@ -1,7 +1,7 @@
 <!-- Search Bar -->
 <ion-grid id="topUI">
   <ion-row>
-      <ion-col size="11">
+      <ion-col size="10">
           <ion-searchbar *ngIf="popSearch" placeholder="Protein Name or pdb ID" color = "dark" animated [(ngModel)]="searchQuery" 
           (search)="search($event,true)" id="searchBar"></ion-searchbar>
       </ion-col>

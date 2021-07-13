@@ -14,9 +14,11 @@ export class FavoriteService {
 
   favorites
 
-  constructor(private storage:Storage) { }
+  constructor(private storage:Storage) { 
+    this.init()
+  }
 
-  async ngOnInit(){
+  async init(){
     const storage = await this.storage.create();
     this._storage = storage;
     this.loadData()
@@ -33,8 +35,10 @@ export class FavoriteService {
   favoritesContains(favorite){
     return (this.favorites.some(elm => {return JSON.stringify(elm) === JSON.stringify(favorite)}))
   }
+
   addFavorite(favorite){
 
+    console.log(this.favorites)
     if(!this.favorites.includes(favorite)){
       this.favorites.push(favorite)
       this._storage.set('favorites',this.favorites)

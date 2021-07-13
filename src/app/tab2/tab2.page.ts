@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PubchemService } from '../services/pubchem.service';
 import { CurrentChemService } from '../services/current-chem.service';
+import { FavoriteService } from '../services/favorite.service';
 const NGL = require('ngl/dist/ngl.js')
 
 @Component({
@@ -16,7 +17,9 @@ export class Tab2Page {
   //
   searchQuery: string;
 
-  constructor(private pubchem: PubchemService, private currentChem:CurrentChemService) {}
+  favorite:boolean = false
+
+  constructor(private pubchem: PubchemService, private currentChem:CurrentChemService, private favoriteService: FavoriteService) {}
 
   async ngOnInit(){
     this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
@@ -27,6 +30,7 @@ export class Tab2Page {
 
   ionViewWillEnter(){
     this.refreshView()
+    this.checkIfFavorite()
     console.log("test")
   }
 
@@ -47,6 +51,22 @@ export class Tab2Page {
   }
 
   //SDF
+  addFavorite(){
+    this.favoriteService.addFavorite(this.currentChem.getName())
+    this.favorite = true
+  }
+
+  checkIfFavorite(){
+    //Checks if current chem is a favorite
+    if(this.favoriteService.favoritesContains(this.currentChem.getName())){
+      this.favorite = true
+    }
+  }
+
+  removeFavorite(){
+    this.favoriteService.removeFavorite(this.currentChem.getName())
+    this.favorite = false
+  }
 
 }
 

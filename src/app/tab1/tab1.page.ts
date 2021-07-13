@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { PubchemService } from '../services/pubchem.service';
 import { CurrentChemService } from '../services/current-chem.service';
+import { FavoriteService } from '../services/favorite.service';
 const SmilesDrawer = require('smiles-drawer/app.js')
 
 @Component({
@@ -16,6 +17,7 @@ export class Tab1Page {
   popSearch = true
   searchQuery:string;
 
+
   options = {
     width: 1000,
     height: 1000,
@@ -29,7 +31,10 @@ export class Tab1Page {
   //is the current chemical a favorite? TODO implement this
   favorite:boolean = false 
 
-  constructor(private platform: Platform,private pubchem: PubchemService, private currentChem:CurrentChemService) {
+  constructor(private platform: Platform,
+    private pubchem: PubchemService, 
+    private currentChem:CurrentChemService,
+    private favoriteService: FavoriteService) {
     
   }
 
@@ -41,8 +46,12 @@ export class Tab1Page {
     this.options.width = this.deviceWidth
     this.smilesDrawer = new SmilesDrawer.Drawer(this.options);
 
-    this.refreshView()
-      
+    
+    }
+
+    ionViewWillEnter(){
+      this.checkIfFavorite()
+      this.refreshView()
     }
 
   refreshView(){
@@ -61,5 +70,22 @@ export class Tab1Page {
   search(event){
     this.currentChem.setName(this.searchQuery)
     this.refreshView()
+  }
+
+  addFavorite(){
+    this.favoriteService.addFavorite(this.currentChem.getName())
+    this.favorite = true
+  }
+
+  checkIfFavorite(){
+    //Checks if current chem is a favorite
+    if(this.favoriteService.favoritesContains(this.currentChem.getName())){
+      this.favorite = true
+    }
+  }
+
+  removeFavorite(){
+    this.favoriteService.removeFavorite(this.currentChem.getName())
+    this.favorite = false
   }
 }
