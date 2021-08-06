@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  favorites
+  favorites=[]
   empty:boolean = true
 
   //TODO add admob integration
   constructor(private favoriteService:FavoriteService, private currentChemService:CurrentChemService,private router:Router) {}
 
-  ngOnInit(){
+  ionViewWillEnter(){
     this.favorites = this.favoriteService.getFavorites()
     this.empty = this.favorites.length == 0
   }

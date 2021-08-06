@@ -38,19 +38,15 @@ export class FavoriteService {
 
   addFavorite(favorite){
 
-    console.log(this.favorites)
     if(!this.favorites.includes(favorite)){
       this.favorites.push(favorite)
       this._storage.set('favorites',this.favorites)
     }
-    console.log(this.favorites)
   }
 
   removeFavorite(favorite){
-    console.log(this.favoritesContains(favorite))
     if(this.favoritesContains(favorite)){
-      console.log(favorite.title)
-      this.favorites = this.favorites.filter(function(el) { return el.id != favorite.id;});
+      this.favorites = this.favorites.filter(function(el) { return el != favorite;});
       }
     this._storage.set('favorites',this.favorites)
   }

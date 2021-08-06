@@ -23,7 +23,7 @@ export class Tab2Page {
 
   async ngOnInit(){
     this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
-    this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
+    this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.panDrag);
 
     this.refreshView()
   }
@@ -37,8 +37,10 @@ export class Tab2Page {
   refreshView(){
     this.stage.removeAllComponents()
     console.log(this.currentChem.getName( ))
+    let self = this
     this.stage.loadFile(this.pubchem.getSDFLink(this.currentChem.getName()),{ ext: "sdf" } ).then( function( comp ){
       comp.addRepresentation( "ball+stick", { multipleBond: true } );
+      self.stage.autoView();
     } );
     //TODO investigate this as a possible way to save an image to the phone
     this.stage.makeImage()
