@@ -1,9 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title (click)="dismiss()">twod-settings</ion-title>
+    <ion-title >Settings</ion-title>
+    <ion-button color="danger" (click)="dismiss()" slot="end">
+      <ion-icon  name="close-sharp"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        Implicit Hydrogen
+      </ion-label>
+      <ion-toggle (ngModelChange)="onChange($event) [(ngModel)]="pepperoni"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Implicit Hydrogen
+      </ion-label>
+      <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+    </ion-item>
+  </ion-list>
 </ion-content>
