@@ -3,6 +3,10 @@ import { Platform } from '@ionic/angular';
 import { PubchemService } from '../services/pubchem.service';
 import { CurrentChemService } from '../services/current-chem.service';
 import { FavoriteService } from '../services/favorite.service';
+
+import { ModalController } from '@ionic/angular';
+import { TwodSettingsPage } from '../popups/twod-settings/twod-settings.page';
+
 const SmilesDrawer = require('smiles-drawer/app.js')
 
 @Component({
@@ -33,7 +37,9 @@ export class Tab1Page {
   constructor(private platform: Platform,
     private pubchem: PubchemService, 
     private currentChem:CurrentChemService,
-    private favoriteService: FavoriteService) {
+    private favoriteService: FavoriteService,
+    public modalController: ModalController) 
+  {
     
   }
 
@@ -90,5 +96,12 @@ export class Tab1Page {
   removeFavorite(){
     this.favoriteService.removeFavorite(this.currentChem.getName())
     this.favorite = false
+  }
+
+  async showSettings(){
+    const modal = await this.modalController.create({
+      component: TwodSettingsPage,
+    });
+    return await modal.present();
   }
 }
