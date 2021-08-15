@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-
+import { SettingsService } from 'src/app/services/settings.service';
 @Component({
   selector: 'app-twod-settings',
   templateUrl: './twod-settings.page.html',
