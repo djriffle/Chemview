@@ -13,7 +13,8 @@
       <ion-label>
         Implicit Hydrogen
       </ion-label>
-      <ion-toggle (ngModelChange)="onChange($event) [(ngModel)]="pepperoni"></ion-toggle>
+      <!-- Binds isImplicit to the value of the toggle below  -->
+      <ion-toggle (ngModelChange)="onChange($event)" [(ngModel)]="isImplicit" ></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>
