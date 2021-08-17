@@ -1,5 +1,7 @@
 {
   "name": "chemview",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
