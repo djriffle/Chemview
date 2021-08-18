@@ -24,8 +24,6 @@ export class Tab2Page {
   async ngOnInit(){
     this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
     this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.panDrag);
-
-    this.refreshView()
   }
 
   ionViewWillEnter(){
