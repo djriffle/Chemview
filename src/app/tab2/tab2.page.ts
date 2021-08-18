@@ -2,13 +2,27 @@ import { Component } from '@angular/core';
 import { PubchemService } from '../services/pubchem.service';
 import { CurrentChemService } from '../services/current-chem.service';
 import { FavoriteService } from '../services/favorite.service';
+
+import { ToastController } from '@ionic/angular';
+
 const NGL = require('ngl/dist/ngl.js')
+
+
+class TouchListener{
+  constructor(private text:string){
+
+  }
+  apply(){
+    console.log(this.text)
+  }
+}
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
+
 export class Tab2Page {
   //the div that that ngl projects onto
   stage
@@ -19,17 +33,23 @@ export class Tab2Page {
 
   favorite:boolean = false
 
-  constructor(private pubchem: PubchemService, private currentChem:CurrentChemService, private favoriteService: FavoriteService) {}
+  constructor(private toastController: ToastController, private pubchem: PubchemService, private currentChem:CurrentChemService, private favoriteService: FavoriteService) {}
+
 
   async ngOnInit(){
     this.stage = new NGL.Stage("threed",{ backgroundColor: "white" });
-    this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.panDrag);
+    this.stage.mouseControls.add("drag-right", NGL.MouseActions.rotateDrag);
+    this.stage.mouseControls.add("drag-left+right", NGL.MouseActions.zoomDrag);
   }
 
   ionViewWillEnter(){
     this.refreshView()
     this.checkIfFavorite()
     console.log("test")
+  }
+
+  ionViewDidEnter(){
+    this.presentToast()
   }
 
   refreshView(){
@@ -40,8 +60,7 @@ export class Tab2Page {
       comp.addRepresentation( "ball+stick", { multipleBond: true } );
       self.stage.autoView();
     } );
-    //TODO investigate this as a possible way to save an image to the phone
-    this.stage.makeImage()
+    this.stage.setSpin(false);
   }
 
   search(event){
@@ -70,6 +89,16 @@ export class Tab2Page {
   removeFavorite(){
     this.favoriteService.removeFavorite(this.currentChem.getName())
     this.favorite = false
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Drag With Two Fingers to Rotate the Model',
+      duration: 2000,
+      position: "middle",
+      cssClass: "toast"
+    });
+    toast.present();
   }
 
 }

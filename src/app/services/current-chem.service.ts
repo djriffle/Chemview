@@ -5,7 +5,7 @@ import { PubchemService } from './pubchem.service';
 })
 export class CurrentChemService {
   
-  name:string = "Carbon";
+  name:string = "Methane";
   formula:string = "C";
 
   constructor(private pubchem:PubchemService) { }
