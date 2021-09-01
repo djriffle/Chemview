@@ -23,8 +23,15 @@ export class CurrentChemService {
   }
 
   async setName(newName:string){
-    this.name = newName
+    this.name = this._standardizeChemicalName(newName)
     await this.setFormula()
+  }
+  /**
+   * turns the chemical names from what ever input into all lowercase with capitcal first letters
+   */
+  private _standardizeChemicalName(name:string){
+    let standardName = name.toLowerCase()
+    return standardName.charAt(0).toUpperCase() + standardName.slice(1)
   }
   
 }
