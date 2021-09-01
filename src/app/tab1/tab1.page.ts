@@ -6,7 +6,8 @@ import { FavoriteService } from '../services/favorite.service';
 
 import { ModalController } from '@ionic/angular';
 import { TwodSettingsPage } from '../popups/twod-settings/twod-settings.page';
-
+import { Settings,DefaultSettings } from '../models/settings';
+import { SettingsService } from '../services/settings.service';
 const SmilesDrawer = require('smiles-drawer/app.js')
 
 @Component({
@@ -16,49 +17,45 @@ const SmilesDrawer = require('smiles-drawer/app.js')
 })
 export class Tab1Page {
 
-  deviceWidth: number;
-  deviceHeight: number;
   popSearch = true
   searchQuery:string;
 
-  options = {
-    width: 1000,
-    height: 1000,
-    //compactDrawing: false,
-    // terminalCarbons: true,
-    // explicitHydrogens: true,
-  };
-  
   //used to draw 2d figure
   smilesDrawer;
   //is the current chemical a favorite? TODO implement this
   favorite:boolean = false 
+  settings:Settings = new DefaultSettings
 
   constructor(private platform: Platform,
     private pubchem: PubchemService, 
     private currentChem:CurrentChemService,
     private favoriteService: FavoriteService,
-    public modalController: ModalController) 
+    public modalController: ModalController,
+    private settingsService:SettingsService) 
   {
     
   }
 
-  ngOnInit(){
-    this.deviceHeight = this.platform.height()
-    this.deviceWidth = this.platform.width()
+  async ngOnInit(){
+    this.settings = await this.settingsService.init()
+    await this._setSettingDimensions()
+    this.smilesDrawer = await new SmilesDrawer.Drawer(this.settings);
+  }
 
-    this.options.height = this.deviceHeight
-    this.options.width = this.deviceWidth
-    this.smilesDrawer = new SmilesDrawer.Drawer(this.options);
+  private _setSettingDimensions(){
+    this.settings.height = this.platform.height()
+    this.settings.width = this.platform.width()
+  }
 
-    
-    }
+  ionViewWillEnter(){
+    this.checkIfFavorite()
+    this.refreshView()
+  }
 
-    ionViewWillEnter(){
-      this.checkIfFavorite()
-      this.refreshView()
-    }
-
+  refreshDrawer(){
+    this.smilesDrawer = new SmilesDrawer.Drawer(this.settings)
+  }
+  
   refreshView(){
     let self = this
     this.pubchem.getSmiles(this.currentChem.getName()).then(smiles =>{

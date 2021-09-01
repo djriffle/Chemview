@@ -1,9 +1,10 @@
 //--
 // Stores all the settings to be used across the app
 //---
+import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { Settings } from '../models/settings';
+import { Settings,DefaultSettings} from '../models/settings';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,38 +12,47 @@ import { Settings } from '../models/settings';
 export class SettingsService {
   _storage
   settings:Settings
+
   constructor(
     private storage: Storage
   ) 
   {
     this.init()
   }
-
+  /** Initializes Settings Storage and return settings */
   async init(){
     const storage = await this.storage.create();
-    this._storage = storage;
+    this._storage = await storage;
+    await this.loadData()
+    return this.settings
   }
 
-  ngOnInit(){
-  //open up storage and request and set all settings
-  //Todo make sure that this will be initalized prior to when a page pulls from it
+  getTwodIsAtomBalls(){
+    return this.settings.twodIsAtomBalls
   }
 
-
+  getTwodIsTerminalCarbons(){
+    return this.settings.twodIsTerminalCarbons
+  }
 
   getTwodIsImplicit(){
-    return this.settings.twodIsImplicit
+    return this.settings.twodIsImplicitHydrogen
   }
   
-  getTwodIsCanonical(){
+  getTwodIsConical(){
     return this.settings.twodIsConical
   }
 
+  getSettings(){
+    console.log(this.settings)
+    return this.settings
+  }
+
   async loadData(){
-    this.settings = await this._storage.get('favorites')
-    if(this.settings == null){
-      await this._storage.set('favorites',[])
-      //Todo implement default seetings this.settings = 
+    console.log("loaded data")
+    this.settings = await this._storage.get('settings')
+    if(this.settings == null || this.settings == undefined){
+      await this._storage.set('settings',new DefaultSettings)
     }
   }
 }
