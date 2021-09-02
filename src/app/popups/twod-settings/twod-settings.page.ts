@@ -16,6 +16,7 @@ export class TwodSettingsPage implements OnInit {
   ioViewWillEnter(){
     this.settings = this.settingsService.getSettings()
   }
+  
   ngOnInit() {
   }
 
