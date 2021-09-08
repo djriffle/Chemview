@@ -1,7 +1,6 @@
 //--
 // Stores all the settings to be used across the app
 //---
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { Settings,DefaultSettings} from '../models/settings';
@@ -12,7 +11,6 @@ import { Settings,DefaultSettings} from '../models/settings';
 export class SettingsService {
   _storage
   settings:Settings
-
   constructor(
     private storage: Storage
   ) 
@@ -27,25 +25,13 @@ export class SettingsService {
     return this.settings
   }
 
-  getTwodIsAtomBalls(){
-    return this.settings.twodIsAtomBalls
-  }
-
-  getTwodIsTerminalCarbons(){
-    return this.settings.twodIsTerminalCarbons
-  }
-
-  getTwodIsImplicit(){
-    return this.settings.twodIsImplicitHydrogen
-  }
-  
-  getTwodIsConical(){
-    return this.settings.twodIsConical
-  }
-
-  getSettings(){
-    console.log(this.settings)
+  getSettings():Settings{
     return this.settings
+  }
+
+  saveSettings(settings:Settings){
+    this.settings=settings
+    this._storage.set('settings',settings)
   }
 
   async loadData(){

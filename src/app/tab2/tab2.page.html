@@ -1,7 +1,7 @@
 <!-- Search Bar -->
 <ion-grid id="topUI">
-  <ion-row>
-      <ion-col size="10">
+    <ion-row>
+        <ion-col size="10">
           <ion-searchbar *ngIf="popSearch" placeholder="Chemical Name" color = "dark" animated [(ngModel)]="searchQuery" 
           (search)="search($event,true)" id="searchBar"></ion-searchbar>
       </ion-col>
@@ -13,7 +13,18 @@
               <ion-icon  name="heart-sharp"></ion-icon>
           </ion-button>       
       </ion-col>
-  </ion-row>
+
+    </ion-row>
+    <ion-row>
+    <ion-col size = "10">
+        <!-- empty for spacing -->
+    </ion-col>
+    <ion-col size="2">
+        <ion-button (click)="removeFavorite()" color = "tertiary" >
+            <ion-icon  name="camera-sharp"></ion-icon>
+        </ion-button>  
+    </ion-col>
+    </ion-row>
 </ion-grid>
 
 <!-- NGL Viewer -->

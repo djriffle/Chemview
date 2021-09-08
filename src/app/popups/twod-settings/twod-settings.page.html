@@ -11,16 +11,25 @@
   <ion-list>
     <ion-item>
       <ion-label>
-        Implicit Hydrogen
+        Explicit Hydrogen
       </ion-label>
       <!-- Binds isImplicit to the value of the toggle below  -->
-      <ion-toggle (ngModelChange)="updateIsImplicit($event)" [(ngModel)]="isImplicit" ></ion-toggle>
+      <ion-toggle [(ngModel)]="settings.explicitHydrogens" ></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>
-        Implicit Hydrogen
+        Display Atoms as Balls
       </ion-label>
-      <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+      <ion-toggle [(ngModel)]="this.atomBalls"></ion-toggle>
     </ion-item>
-  </ion-list>
+  <ion-item>
+    <ion-label>
+      Terminal Carbons
+    </ion-label>
+    <ion-toggle [(ngModel)]="settings.terminalCarbons"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <p id="contact">Reach out to contact@dylanriffle.com for any Feature Suggestions</p>
+  </ion-item>
+</ion-list>
 </ion-content>

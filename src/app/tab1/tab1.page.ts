@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { TwodSettingsPage } from '../popups/twod-settings/twod-settings.page';
 import { Settings,DefaultSettings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
+
 const SmilesDrawer = require('smiles-drawer/app.js')
 
 @Component({
@@ -99,6 +100,12 @@ export class Tab1Page {
     const modal = await this.modalController.create({
       component: TwodSettingsPage,
     });
+    modal.onWillDismiss().then(data=>{
+      this.settings = this.settingsService.getSettings()
+      console.log(this.settings)
+      this.refreshDrawer()
+      this.refreshView()
+    })
     return await modal.present();
   }
 }

@@ -10,12 +10,17 @@ import { Settings,DefaultSettings } from 'src/app/models/settings';
 export class TwodSettingsPage implements OnInit {
   
   settings:Settings = new DefaultSettings
-
+  atomBalls:boolean
   constructor(private settingsService: SettingsService, public modalController: ModalController) { }
 
-  ioViewWillEnter(){
+  ionViewWillEnter(){
     this.settings = this.settingsService.getSettings()
+    if(this.settings.atomVisualization == "balls"){
+      this.atomBalls = true 
+    }
+    console.log(this.settings)
   }
+  
   
   ngOnInit() {
   }
@@ -24,6 +29,13 @@ export class TwodSettingsPage implements OnInit {
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
+    if(this.atomBalls){
+      this.settings.atomVisualization = "balls"
+    }
+    else{
+      this.settings.atomVisualization = "default"
+    }
+    this.settingsService.saveSettings(this.settings)
     this.modalController.dismiss({
       'dismissed': true
     });
