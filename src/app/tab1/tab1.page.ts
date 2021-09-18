@@ -8,6 +8,8 @@ import { ModalController } from '@ionic/angular';
 import { TwodSettingsPage } from '../popups/twod-settings/twod-settings.page';
 import { Settings,DefaultSettings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
+import { ImageSaverService } from '../services/image-saver.service';
+import { runInThisContext } from 'vm';
 
 const SmilesDrawer = require('smiles-drawer/app.js')
 
@@ -32,6 +34,7 @@ export class Tab1Page {
     private currentChem:CurrentChemService,
     private favoriteService: FavoriteService,
     public modalController: ModalController,
+    private imageSaverService:ImageSaverService,
     private settingsService:SettingsService) 
   {
     
@@ -107,5 +110,10 @@ export class Tab1Page {
       this.refreshView()
     })
     return await modal.present();
+  }
+
+  saveCanvas(){
+    let canvas = document.getElementById("twod")
+    this.imageSaverService.saveImage(canvas)
   }
 }

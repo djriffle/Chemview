@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PubchemService } from '../services/pubchem.service';
 import { CurrentChemService } from '../services/current-chem.service';
 import { FavoriteService } from '../services/favorite.service';
-
+import { ImageSaverService } from '../services/image-saver.service';
 import { ToastController } from '@ionic/angular';
 
 const NGL = require('ngl/dist/ngl.js')
@@ -33,7 +33,13 @@ export class Tab2Page {
 
   favorite:boolean = false
 
-  constructor(private toastController: ToastController, private pubchem: PubchemService, private currentChem:CurrentChemService, private favoriteService: FavoriteService) {}
+  constructor(
+    private toastController: ToastController,
+    private pubchem: PubchemService,
+    private currentChem:CurrentChemService,
+    private favoriteService: FavoriteService,
+    private imageSaverService: ImageSaverService
+    ) {}
 
 
   async ngOnInit(){
@@ -99,6 +105,11 @@ export class Tab2Page {
       cssClass: "toast"
     });
     toast.present();
+  }
+
+  saveCanvas(){
+    let canvas = document.getElementById("threed")
+    this.imageSaverService.saveImage(canvas)
   }
 
 }
