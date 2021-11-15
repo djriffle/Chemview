@@ -4,7 +4,7 @@ import { CurrentChemService } from '../services/current-chem.service';
 import { FavoriteService } from '../services/favorite.service';
 import { ImageSaverService } from '../services/image-saver.service';
 import { ToastController } from '@ionic/angular';
-
+import { AlertController } from '@ionic/angular';
 const NGL = require('ngl/dist/ngl.js')
 
 
@@ -38,7 +38,8 @@ export class Tab2Page {
     private pubchem: PubchemService,
     private currentChem:CurrentChemService,
     private favoriteService: FavoriteService,
-    private imageSaverService: ImageSaverService
+    private imageSaverService: ImageSaverService,
+    private alertController: AlertController
     ) {}
 
 
@@ -69,10 +70,39 @@ export class Tab2Page {
     this.stage.setSpin(false);
   }
 
-  search(event){
-    console.log("term is:"+this.searchQuery)
-    this.currentChem.setName(this.searchQuery)
-    this.refreshView()
+  async search(event,first:boolean){
+    console.log("term is:"+ this.searchQuery)
+    let pastName = this.currentChem.getName()
+    console.log("past name: " + pastName)
+    try{
+      await this.currentChem.setName(this.searchQuery)
+    }
+    catch{
+      if(first){
+      await this.currentChem.setName(pastName)
+      setTimeout(() => {this.search(event,false)}, 500);
+      }
+      else{
+      this.presentNoChemical()
+      await this.currentChem.setName(pastName)
+      }
+      return
+    }
+    
+    try{
+      this.refreshView()
+    }
+    catch{
+      console.log("in catch")
+      if(first){
+        setTimeout(() => {this.search(event,false)}, 5000);
+      }
+      else{
+        this.presentNoChemical()
+        this.currentChem.setName(pastName)
+      }
+    }
+    this._popSearch()
     this.checkIfFavorite()
   }
 
@@ -109,7 +139,24 @@ export class Tab2Page {
 
   saveCanvas(){
     let canvas = document.getElementById("threed")
-    this.imageSaverService.saveImage(canvas)
+    //this.imageSaverService.saveImage(canvas)
+  }
+
+  _popSearch(){
+    console.log("popping")
+    this.popSearch =false
+    setTimeout(() => {this.popSearch = true}, 500);
+  }
+
+  async presentNoChemical () {
+    const alert = await this.alertController.create({
+      header: 'Chemcial Not Found',
+      message: 'Your chemical can no be found in the PubChem database.',
+      buttons: ['OK']
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 }

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FavoriteService } from '../services/favorite.service';
 import { CurrentChemService } from '../services/current-chem.service';
 import { Router } from '@angular/router';
+import { AdMob } from '@admob-plus/ionic/ngx';
+import { Platform } from '@ionic/angular';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -11,8 +14,43 @@ export class Tab3Page {
   favorites=[]
   empty:boolean = true
 
-  //TODO add admob integration
-  constructor(private favoriteService:FavoriteService, private currentChemService:CurrentChemService,private router:Router) {}
+  //special for admob
+  admobBanner
+  admobSetup:boolean = false
+
+  constructor(
+    private favoriteService:FavoriteService,
+    private currentChemService:CurrentChemService,
+    private router:Router,
+    private admob:AdMob,
+    private platform:Platform) 
+    {
+    this.platform.ready().then(async () => {
+      await this.admob.start();
+      this.admob.requestTrackingAuthorization()
+      if(this.platform.is("ios")){
+        //ios admob
+        console.log("Running ios")
+        this.admobBanner = new this.admob.BannerAd({
+          adUnitId: 'ca-app-pub-7436607995177518~8265469498',
+          position: 'top'
+        });
+      }
+      else{
+        //andriod admob
+        console.log("Running andrioid")
+        this.admobBanner = new this.admob.BannerAd({
+          adUnitId: 'ca-app-pub-7436607995177518~6321832439',
+          position: 'top'
+        });
+      }
+      this.admobBanner.show();
+      this.admobSetup=true
+      
+      this.admob.on('admob.banner.load').subscribe(async () => {
+      });
+    });
+  }
 
   ionViewWillEnter(){
     this.favorites = this.favoriteService.getFavorites()
@@ -28,6 +66,11 @@ export class Tab3Page {
   load(favorite){
     this.currentChemService.setName(favorite)
     this.router.navigate(['tabs/tab1'])
+  }
+  
+  ionViewWillLeave(){
+    this.admobBanner.hide()
+    console.log("leaving")
   }
 
 }
