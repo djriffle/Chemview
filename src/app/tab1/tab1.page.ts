@@ -10,6 +10,9 @@ import { Settings,DefaultSettings } from '../models/settings';
 import { SettingsService } from '../services/settings.service';
 import { ImageSaverService } from '../services/image-saver.service';
 import { AlertController } from '@ionic/angular';
+import { ThisReceiver } from '@angular/compiler';
+
+
 
 const SmilesDrawer = require('smiles-drawer/app.js')
 
@@ -28,7 +31,7 @@ export class Tab1Page {
   //is the current chemical a favorite? TODO implement this
   favorite:boolean = false 
   settings:Settings = new DefaultSettings
-
+  initalized:boolean = false
   constructor(private platform: Platform,
     private pubchem: PubchemService, 
     public currentChem:CurrentChemService,
@@ -36,15 +39,15 @@ export class Tab1Page {
     public modalController: ModalController,
     private imageSaverService:ImageSaverService,
     private settingsService:SettingsService,
-    private alertController:AlertController) 
+    private alertController:AlertController,) 
   {
-    
   }
 
   async ngOnInit(){
     this.settings = await this.settingsService.init()
     await this._setSettingDimensions()
     this.smilesDrawer = await new SmilesDrawer.Drawer(this.settings);
+    await this.refreshView()
   }
 
   private _setSettingDimensions(){
@@ -136,6 +139,7 @@ export class Tab1Page {
     });
     modal.onWillDismiss().then(data=>{
       this.settings = this.settingsService.getSettings()
+      this._setSettingDimensions()
       console.log(this.settings)
       this.refreshDrawer()
       this.refreshView()

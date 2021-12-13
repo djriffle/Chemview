@@ -13,11 +13,12 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AdMob } from '@admob-plus/ionic/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,IonicStorageModule.forRoot()],
-  providers: [AdMob, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }],
+  providers: [ AdMob, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

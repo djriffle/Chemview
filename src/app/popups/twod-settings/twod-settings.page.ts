@@ -29,16 +29,23 @@ export class TwodSettingsPage implements OnInit {
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    if(this.atomBalls){
-      this.settings.atomVisualization = "balls"
+    try{
+      if(this.atomBalls){
+        this.settings.atomVisualization = "balls"
+      }
+      else{
+        this.settings.atomVisualization = "default"
+      }
+      this.settingsService.saveSettings(this.settings)
+      this.modalController.dismiss({
+        'dismissed': true
+      });
     }
-    else{
-      this.settings.atomVisualization = "default"
+    catch{
+      this.modalController.dismiss({
+        'dismissed': true
+      });
     }
-    this.settingsService.saveSettings(this.settings)
-    this.modalController.dismiss({
-      'dismissed': true
-    });
   }
 
 }

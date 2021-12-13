@@ -22,6 +22,7 @@ export class SettingsService {
     const storage = await this.storage.create();
     this._storage = await storage;
     await this.loadData()
+    console.log(this.settings)
     return this.settings
   }
 
@@ -39,6 +40,7 @@ export class SettingsService {
     this.settings = await this._storage.get('settings')
     if(this.settings == null || this.settings == undefined){
       await this._storage.set('settings',new DefaultSettings)
+      this.settings = await this._storage.get('settings')
     }
   }
 }

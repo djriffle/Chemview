@@ -32,7 +32,7 @@ export class Tab3Page {
         //ios admob
         console.log("Running ios")
         this.admobBanner = new this.admob.BannerAd({
-          adUnitId: 'ca-app-pub-7436607995177518~8265469498',
+          adUnitId: 'ca-app-pub-7436607995177518/9807257626',
           position: 'top'
         });
       }
@@ -40,7 +40,9 @@ export class Tab3Page {
         //andriod admob
         console.log("Running andrioid")
         this.admobBanner = new this.admob.BannerAd({
-          adUnitId: 'ca-app-pub-7436607995177518~6321832439',
+          //TODO make an android banner
+          //These are the same right now
+          adUnitId: 'ca-app-pub-7436607995177518/9807257626',
           position: 'top'
         });
       }
