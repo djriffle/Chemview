@@ -55,6 +55,9 @@ export class Tab3Page {
   }
 
   ionViewWillEnter(){
+    if(this.admobSetup){
+      this.admobBanner.show()
+    }
     this.favorites = this.favoriteService.getFavorites()
     this.empty = this.favorites.length == 0
   }
