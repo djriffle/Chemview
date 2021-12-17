@@ -16,3 +16,14 @@
 .toast{
     text-align: center;
 }
+
+#bottomUI{
+    position: absolute;
+    height:5vh;
+    top:75vh;
+    width:100vw ;
+    color:black;
+    font-size: 5vh;
+    align-content: center;
+    z-index: 2;
+}
